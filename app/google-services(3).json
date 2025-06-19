@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1039346573801",
+    "project_id": "riseofj2r",
+    "storage_bucket": "riseofj2r.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1039346573801:android:65c8b4b4206843eed7eb78",
+        "android_client_info": {
+          "package_name": "com.kingsler.riseofj2r"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPqrTrvAQAZtASvZNt579NqNuOOCfYf6k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
