@@ -123,7 +123,7 @@ fun ForgotPassword(navController: NavHostController?) {
                 }) {
                     Text(
                         text = "Back to Login",
-                        color = Color(0xFF667EEA),
+                        color = Color(0xFF546CCE),
                         fontWeight = FontWeight.Medium
                     )
                 }

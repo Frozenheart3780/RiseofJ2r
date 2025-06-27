@@ -1,26 +1,47 @@
-package com.kingsler.riseofj2r.Crudconfig
+package com.kingsler.riseofj2r.data.local
 
-// InstructionViewModel.kt
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
+import com.kingsler.riseofj2r.Crudconfig.Instruction
 
-class InstructionViewModel(private val repo: InstructionRepository) : ViewModel() {
+class FakeInstructionDao : InstructionDao {
 
-    fun addInstruction(instruction: Instruction) = viewModelScope.launch {
-        repo.create(instruction)
+    private val instructions = mutableListOf<Instruction1>()
+
+    // ========== CRUD Methods ==========
+
+    override suspend fun insertInstruction(instruction: Instruction1) {
+        instructions.add(instruction)
     }
 
-    fun getAllInstructions(onResult: (List<Instruction>) -> Unit) = viewModelScope.launch {
-        onResult(repo.readAll())
+    override suspend fun deleteInstruction(instruction: Instruction1) {
+        instructions.removeIf { it.id == instruction.id }
     }
 
-    fun updateInstruction(instruction: Instruction) = viewModelScope.launch {
-        repo.update(instruction)
+    override suspend fun getAllInstructions(): List<Instruction1> {
+        return instructions.toList()
     }
 
-    fun deleteInstruction(instruction: Instruction) = viewModelScope.launch {
-        repo.delete(instruction)
+    override suspend fun getInstructionsByCategory(category: String): List<Instruction1> {
+        return instructions.filter { it.category.equals(category, ignoreCase = true) }
     }
 
+    // ========== Optional helpers ==========
+
+    // You can map between Instruction and Instruction1 if needed
+    fun fromInstruction(instruction: Instruction): Instruction1 {
+        return Instruction1(
+            id = instruction.id,
+            title = instruction.title,
+            category = instruction.category,
+            content = instruction.content
+        )
+    }
+
+    fun toInstruction(instruction1: Instruction1): Instruction {
+        return Instruction(
+            id = instruction1.id,
+            title = instruction1.title,
+            category = instruction1.category,
+            content = instruction1.content
+        )
+    }
 }

@@ -1,5 +1,6 @@
 package com.kingsler.riseofj2r.data.local
 
+import Dao1
 import androidx.room.Database
 import androidx.room.RoomDatabase
 

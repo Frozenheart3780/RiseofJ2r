@@ -1,6 +1,6 @@
 package com.kingsler.riseofj2r.Crudconfig
 
-// InstructionRepository.kt
+// InstructionRepository1.kt
 class InstructionRepository(private val dao: InstructionDao) {
     suspend fun create(instruction: Instruction) = dao.insert(instruction)
     suspend fun readAll() = dao.getAll()

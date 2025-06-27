@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.gms.google-services")
+
     // Uncomment if using Hilt Gradle Plugin
     // id("com.google.dagger.hilt.android") version "2.56.1"
     // Uncomment if using kapt (for Room/Hilt)
@@ -74,6 +76,10 @@ dependencies {
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
     // kapt("androidx.room:room-compiler:2.6.1") // Uncomment if using kapt
+    implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+
+
 
     // Hilt
     implementation("com.google.dagger:hilt-android:2.56.1")
@@ -107,6 +113,21 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.6.0")
     debugImplementation("androidx.compose.ui:ui-tooling:1.6.0")
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.6.0")
+    // Compose Material Icons (Filled)
+    implementation("androidx.compose.material:material-icons-extended:<compose_version>")
+    implementation(platform("androidx.compose:compose-bom:2024.04.01"))
+    implementation("androidx.compose.material:material-icons-extended")
+    // ViewModel + Coroutine support
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation(platform("androidx.compose:compose-bom:2024.04.01"))
+
+
+
+
+
+
 
     // Optional Support Libraries
     // Only include if you specifically use legacy features

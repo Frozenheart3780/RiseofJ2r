@@ -14,7 +14,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -34,17 +33,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
 @Composable
 fun LoginScreen(navController: NavHostController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var error by remember { mutableStateOf<String?>(null) }
 
     Box(
         modifier = Modifier
@@ -105,39 +106,45 @@ fun LoginScreen(navController: NavHostController) {
                     modifier = Modifier.fillMaxWidth()
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Button(
-                    onClick = { /* TODO: Handle login */ },
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF667EEA),
-                        contentColor = Color.White
-                    )
-                ) {
-                    Text("Log In")
+                if (!error.isNullOrEmpty()) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(text = error ?: "", color = Color.Red, fontSize = 14.sp)
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                Text(
-                    text = "Preview: Secure access to your dashboard and more.",
-                    fontSize = 12.sp,
-                    color = Color.Gray,
-                    textAlign = TextAlign.Center,
+                Button(
+                    onClick = {
+                        if (email.isBlank() || password.isBlank()) {
+                            error = "Email and password are required"
+                        } else {
+                            Firebase.auth.signInWithEmailAndPassword(email, password)
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        navController.navigate("mainHome") {
+                                            popUpTo("login") { inclusive = true }
+                                        }
+                                    } else {
+                                        error = task.exception?.message ?: "Login failed"
+                                    }
+                                }
+                        }
+                    },
                     modifier = Modifier.fillMaxWidth()
-                )
+                ) {
+                    Text("Login")
+                }
 
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(12.dp))
 
-                Text(
-                    text = "Don't have an account?",
-                    fontSize = 14.sp,
-                    color = Color.Gray
-                )
-
-                TextButton(onClick = { navController.navigate("signup") }) {
-                    Text("Sign Up", color = Color(0xFF667EEA), fontWeight = FontWeight.Medium)
+                TextButton(onClick = {
+                    navController.navigate("signUp")
+                }) {
+                    Text(
+                        "Don't have an account? Sign up",
+                        color = Color(0xFF667EEA),
+                        fontWeight = FontWeight.Medium
+                    )
                 }
             }
         }
